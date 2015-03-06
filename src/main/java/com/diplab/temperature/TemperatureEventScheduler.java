@@ -3,17 +3,28 @@ package com.diplab.temperature;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
-public class TemperatureEventScheduler implements Runnable {
+public class TemperatureEventScheduler extends Thread {
 	private Map<Date, Temperature> records = Collections
-			.synchronizedMap(new HashMap<Date, Temperature>());
-	List<TemperatureEventObserver> observers = new ArrayList<TemperatureEventObserver>();
+			.synchronizedMap(new TreeMap<Date, Temperature>(Collections
+					.reverseOrder()));
+
+	private List<TemperatureEventListener> observers = new ArrayList<TemperatureEventListener>();
+
+	private static TemperatureEventScheduler temperatureEventScheduler = new TemperatureEventScheduler();
+
+	public static TemperatureEventScheduler getTemperatureEventScheduler() {
+		return temperatureEventScheduler;
+	}
+
+	private TemperatureEventScheduler() {
+	}
 
 	public void addTemperatureEventObserver(
-			TemperatureEventObserver eventObserver) {
+			TemperatureEventListener eventObserver) {
 		observers.add(eventObserver);
 	}
 
@@ -25,7 +36,7 @@ public class TemperatureEventScheduler implements Runnable {
 		new Thread() {
 			public void run() {
 				while (true) {
-					for (TemperatureEventObserver temperatureEventObserver : observers) {
+					for (TemperatureEventListener temperatureEventObserver : observers) {
 						if (temperatureEventObserver.isSatisfy(records)) {
 							temperatureEventObserver.activate(records);
 							observers.remove(temperatureEventObserver);

@@ -25,4 +25,5 @@ public class Constant {
 		DIP_PARSER.put(conditionparser.getElementName(), conditionparser);
 	}
 
+	public static final String PROPERTYNAME_START_TEMP = "start_temp";
 }

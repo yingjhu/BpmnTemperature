@@ -1,7 +1,6 @@
 package com.diplab.temperature;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.engine.ProcessEngine;
@@ -29,7 +28,11 @@ public class DiplabTemperature {
 				.setPostBpmnParseHandlers(Arrays
 						.<BpmnParseHandler> asList(new DiplabEventDefinitionParserHandler()));
 
+		// standaloneInMemProcessEngineConfiguration.setCustomPostDeployers(customPostDeployers)
+
 		standaloneInMemProcessEngineConfiguration.setJobExecutorActivate(true);
+
+		TemperatureEventScheduler.getTemperatureEventScheduler().start();
 
 		ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
 				.buildProcessEngine();
@@ -38,7 +41,5 @@ public class DiplabTemperature {
 				.disableSchemaValidation().disableBpmnValidation()
 				.addClasspathResource("Temperature.bpmn20.xml").deploy();
 
-		processEngine.getRuntimeService()
-				.startProcessInstanceByKey("bookorder");
 	}
 }
