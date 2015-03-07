@@ -14,6 +14,8 @@ import com.diplab.avtiviti.engine.impl.bpmn.parser.handler.DiplabStartEventParse
 
 public class DiplabTemperature {
 
+	public static ProcessEngine processEngine;
+
 	public static void main(String[] args) throws InterruptedException {
 		ProcessEngineConfigurationImpl standaloneInMemProcessEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
 				.createStandaloneInMemProcessEngineConfiguration();
@@ -32,14 +34,17 @@ public class DiplabTemperature {
 
 		standaloneInMemProcessEngineConfiguration.setJobExecutorActivate(true);
 
-		TemperatureEventScheduler.getTemperatureEventScheduler().start();
-
-		ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
+		final ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
 				.buildProcessEngine();
+		DiplabTemperature.processEngine = processEngine;
 
 		processEngine.getRepositoryService().createDeployment()
 				.disableSchemaValidation().disableBpmnValidation()
-				.addClasspathResource("Temperature.bpmn20.xml").deploy();
+				.addClasspathResource("temperatureProcess.bpmn20.xml")
+				.addClasspathResource("temperature.bpmn20.xml").deploy();
+
+		processEngine.getRuntimeService().startProcessInstanceByKey(
+				"temperatureProcess");
 
 	}
 }

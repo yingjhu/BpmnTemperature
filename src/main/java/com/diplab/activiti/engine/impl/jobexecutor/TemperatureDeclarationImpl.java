@@ -25,7 +25,7 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
-					return RecordsUtil.getLatest(records).getTemp() > condition;
+					return RecordsUtil.getLatest(records).getTemperature() > condition;
 				}
 			};
 
@@ -34,7 +34,7 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
-					return RecordsUtil.getLatest(records).getTemp() < condition;
+					return RecordsUtil.getLatest(records).getTemperature() < condition;
 				}
 			};
 		default:

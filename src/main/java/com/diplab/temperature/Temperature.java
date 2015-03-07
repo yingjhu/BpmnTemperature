@@ -4,7 +4,7 @@ public class Temperature {
 
 	private double temp;
 
-	public double getTemp() {
+	public double getTemperature() {
 		return temp;
 	}
 

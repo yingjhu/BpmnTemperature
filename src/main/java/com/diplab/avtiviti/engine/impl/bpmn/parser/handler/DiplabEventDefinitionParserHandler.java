@@ -14,12 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
-import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationImpl;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
+import com.diplab.temperature.DiplabTemperature;
 import com.diplab.temperature.IsSatisfy;
 import com.diplab.temperature.Temperature;
 import com.diplab.temperature.TemperatureEventListener;
-import com.diplab.temperature.TemperatureEventScheduler;
+import com.diplab.temperature.delegate.SchedulerTask;
 
 public class DiplabEventDefinitionParserHandler extends
 		AbstractBpmnParseHandler<DiplabEventDefinition> {
@@ -37,7 +37,9 @@ public class DiplabEventDefinitionParserHandler extends
 			DiplabEventDefinition eventDefinition) {
 		// Behavior
 		ActivityImpl temperatureEventActivity = bpmnParse.getCurrentActivity();
-		temperatureEventActivity.setActivityBehavior(new ActivityBehavior() {
+		temperatureEventActivity.setActivityBehavior(
+
+		new ActivityBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -62,25 +64,32 @@ public class DiplabEventDefinitionParserHandler extends
 			return;
 		}
 
-		TemperatureDeclarationImpl declarationImpl = new TemperatureDeclarationImpl(
-				type, condition);
+		// TemperatureDeclarationImpl declarationImpl = new
+		// TemperatureDeclarationImpl(
+		// type, condition);
 
-		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
+		// TODO
+		// IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
+		IsSatisfy isSatisfy = new IsSatisfy() {
 
+			@Override
+			public boolean isSatisfy(Map<Date, Temperature> records) {
+				return true;
+			}
+		};
 		final ProcessDefinitionEntity processDefinition = bpmnParse
 				.getCurrentProcessDefinition();
 
-		TemperatureEventListener observer = new TemperatureEventListener(
+		TemperatureEventListener listener = new TemperatureEventListener(
 				isSatisfy) {
 
 			@Override
 			public void activate(Map<Date, Temperature> records) {
-				processDefinition.createProcessInstance().start();
+				DiplabTemperature.processEngine.getRuntimeService()
+						.startProcessInstanceById(processDefinition.getId());
 			}
 		};
-		TemperatureEventScheduler.getTemperatureEventScheduler()
-				.addTemperatureEventObserver(observer);
+		SchedulerTask.addTemperatureEventListener(listener);
 
 	}
-
 }
