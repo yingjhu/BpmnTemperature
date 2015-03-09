@@ -13,12 +13,10 @@ import com.diplab.temperature.Constant;
 
 public class DiplabEventDefinitionParser extends BaseChildElementParser {
 
-	public static final String ELEMENT_DIPLAB_EVENT_DEFINITION = "diplabEventDefinition";
-
 	@Override
 	public String getElementName() {
 
-		return ELEMENT_DIPLAB_EVENT_DEFINITION;
+		return Constant.ELEMENT_DIPLAB_EVENT_DEFINITION;
 	}
 
 	@Override
@@ -29,7 +27,10 @@ public class DiplabEventDefinitionParser extends BaseChildElementParser {
 
 		DiplabEventDefinition diplabEventDefinition = new DiplabEventDefinition();
 		BpmnXMLUtil.addXMLLocation(diplabEventDefinition, xtr);
-		BpmnXMLUtil.parseChildElements(ELEMENT_DIPLAB_EVENT_DEFINITION,
+
+		// We need other child parser for node: mode and condition
+		BpmnXMLUtil.parseChildElements(
+				Constant.ELEMENT_DIPLAB_EVENT_DEFINITION,
 				diplabEventDefinition, xtr, Constant.DIP_PARSER, model);
 
 		((Event) parentElement).getEventDefinitions()

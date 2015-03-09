@@ -3,7 +3,6 @@ package com.diplab.activiti.bpmn.converter;
 import javax.xml.stream.XMLStreamReader;
 
 import org.activiti.bpmn.converter.StartEventXMLConverter;
-
 import org.activiti.bpmn.converter.util.BpmnXMLUtil;
 import org.activiti.bpmn.model.BaseElement;
 import org.activiti.bpmn.model.BpmnModel;
@@ -11,9 +10,7 @@ import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.alfresco.AlfrescoStartEvent;
 import org.apache.commons.lang3.StringUtils;
 
-
 import com.diplab.temperature.Constant;
-
 
 public class DiplabStartEventXMLConverter extends StartEventXMLConverter {
 
@@ -39,6 +36,7 @@ public class DiplabStartEventXMLConverter extends StartEventXMLConverter {
 						ATTRIBUTE_EVENT_START_INITIATOR));
 		startEvent.setFormKey(formKey);
 
+		// Add our own parser > like DiplabEventDefinitionParser
 		parseChildElements(getXMLElementName(), startEvent,
 				Constant.DIP_PARSER, model, xtr);
 

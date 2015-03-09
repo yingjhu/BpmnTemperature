@@ -8,12 +8,8 @@ import org.activiti.bpmn.model.TimerEventDefinition;
 import org.activiti.engine.impl.bpmn.parser.BpmnParse;
 import org.activiti.engine.impl.bpmn.parser.handler.StartEventParseHandler;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.delegate.ActivityBehavior;
-import org.activiti.engine.impl.pvm.delegate.ActivityExecution;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
 
@@ -28,7 +24,7 @@ public class DiplabStartEventParserHandler extends StartEventParseHandler {
 					startEvent.getInitiator());
 		}
 
-		// all start events share the same behavior:
+		// all start events share the same behavior
 		startEventActivity.setActivityBehavior(bpmnParse
 				.getActivityBehaviorFactory()
 				.createNoneStartEventActivityBehavior(startEvent));
@@ -38,10 +34,10 @@ public class DiplabStartEventParserHandler extends StartEventParseHandler {
 			if (eventDefinition instanceof TimerEventDefinition
 					|| eventDefinition instanceof MessageEventDefinition
 					|| eventDefinition instanceof SignalEventDefinition
-					|| eventDefinition instanceof DiplabEventDefinition ) {
+					|| eventDefinition instanceof DiplabEventDefinition) {
 				bpmnParse.getBpmnParserHandlers().parseElement(bpmnParse,
 						eventDefinition);
-			} 
+			}
 		}
 	}
 

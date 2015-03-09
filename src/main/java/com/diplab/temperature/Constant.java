@@ -10,6 +10,10 @@ import com.diplab.activiti.bpmn.converter.child.DiplabEventDefinitionParser;
 import com.diplab.activiti.bpmn.converter.child.ModeParser;
 
 public class Constant {
+	public static final String ATTRIBUTE_CONDITION = "condition";
+	public static final String ELEMENT_DIPLAB_EVENT_DEFINITION = "diplabEventDefinition";
+	public static final String ATTRIBUTE_MODE = "mode";
+
 	private Constant() {
 	}
 
@@ -25,5 +29,4 @@ public class Constant {
 		DIP_PARSER.put(conditionparser.getElementName(), conditionparser);
 	}
 
-	public static final String PROPERTYNAME_START_TEMP = "start_temp";
 }

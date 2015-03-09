@@ -36,14 +36,23 @@ public class DiplabEventDefinitionParserHandler extends
 	@Override
 	protected void executeParse(BpmnParse bpmnParse,
 			DiplabEventDefinition eventDefinition) {
-		// Behavior
-		ActivityImpl temperatureEventActivity = bpmnParse.getCurrentActivity();
-		temperatureEventActivity.setActivityBehavior(
 
-		new ActivityBehavior() {
+		/*
+		 * 1. prepare activity behavior
+		 * 2. prepare TemperatureEventListener
+		 * 3. add TemperatureEventListener into scheduler
+		 */
+
+		// 1. Behavior: go through next activity
+		ActivityImpl temperatureEventActivity = bpmnParse.getCurrentActivity();
+		temperatureEventActivity.setActivityBehavior(new ActivityBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			/**
+			 * Just go through the next activity
+			 * Only one transition should be taken
+			 */
 			public void execute(ActivityExecution execution) throws Exception {
 				System.out.println("Temperature");
 				execution.take(execution.getActivity().getOutgoingTransitions()
@@ -52,7 +61,15 @@ public class DiplabEventDefinitionParserHandler extends
 			}
 		});
 
-		// prepare TemperatureEventListener and schedule
+		/*
+		 * 2. prepare TemperatureEventListener
+		 * 
+		 * 2.1 Prepare TemperatureDeclarationType
+		 * 2.2 Use TemperatureDeclarationType.prepareIsSatisfy()
+		 * 2.3 New TemperatureEventListener with IsSatisfy
+		 * and implement activate and isEnd
+		 */
+
 		TemperatureDeclarationType type;
 		double condition = Double.parseDouble(eventDefinition.getCondition());
 		if (eventDefinition.getMode().equalsIgnoreCase("greater")) {
@@ -68,7 +85,6 @@ public class DiplabEventDefinitionParserHandler extends
 		TemperatureDeclarationImpl declarationImpl = new TemperatureDeclarationImpl(
 				type, condition);
 
-		// TODO
 		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
 		final ProcessDefinitionEntity processDefinition = bpmnParse
 				.getCurrentProcessDefinition();
@@ -87,6 +103,8 @@ public class DiplabEventDefinitionParserHandler extends
 				return false;
 			}
 		};
+
+		// 3. schedule
 		SchedulerTask.addTemperatureEventListener(listener);
 
 	}
