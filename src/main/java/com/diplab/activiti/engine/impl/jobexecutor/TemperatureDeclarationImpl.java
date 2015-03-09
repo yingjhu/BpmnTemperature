@@ -25,6 +25,8 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
+					if (records == null || records.size() == 0)
+						return false;
 					return RecordsUtil.getLatest(records).getTemperature() > condition;
 				}
 			};
@@ -34,6 +36,8 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
+					if (records == null || records.size() == 0)
+						return false;
 					return RecordsUtil.getLatest(records).getTemperature() < condition;
 				}
 			};

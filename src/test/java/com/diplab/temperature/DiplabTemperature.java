@@ -40,11 +40,14 @@ public class DiplabTemperature {
 
 		processEngine.getRepositoryService().createDeployment()
 				.disableSchemaValidation().disableBpmnValidation()
-				.addClasspathResource("temperatureProcess.bpmn20.xml")
+				.addClasspathResource("ReadTempProcess.bpmn")
+				.addClasspathResource("SchedulerProcess.bpmn")
 				.addClasspathResource("temperature.bpmn20.xml").deploy();
 
 		processEngine.getRuntimeService().startProcessInstanceByKey(
-				"temperatureProcess");
+				"ReadTempProcess");
+		processEngine.getRuntimeService().startProcessInstanceByKey(
+				"schedulerProcess");
 
 	}
 }

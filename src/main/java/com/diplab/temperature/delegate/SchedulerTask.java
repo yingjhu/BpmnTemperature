@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.Marshaller.Listener;
-
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
@@ -21,12 +19,15 @@ public class SchedulerTask implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		System.out.println(SchedulerTask.class.getName());
 		while (true) {
-			for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
-				TemperatureEventListener temperatureEventListener = (TemperatureEventListener) iterator
+			for (Iterator<TemperatureEventListener> iterator = listeners
+					.iterator(); iterator.hasNext();) {
+				TemperatureEventListener temperatureEventListener = iterator
 						.next();
 				if (temperatureEventListener.isSatisfy(RecordsUtil.records)) {
 					temperatureEventListener.activate(RecordsUtil.records);
-					iterator.remove();
+					if (temperatureEventListener.isEnd()) {
+						iterator.remove();
+					}
 				}
 
 			}

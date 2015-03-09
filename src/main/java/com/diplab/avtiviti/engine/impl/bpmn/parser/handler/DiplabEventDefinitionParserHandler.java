@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
+import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationImpl;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
 import com.diplab.temperature.DiplabTemperature;
 import com.diplab.temperature.IsSatisfy;
@@ -64,19 +65,11 @@ public class DiplabEventDefinitionParserHandler extends
 			return;
 		}
 
-		// TemperatureDeclarationImpl declarationImpl = new
-		// TemperatureDeclarationImpl(
-		// type, condition);
+		TemperatureDeclarationImpl declarationImpl = new TemperatureDeclarationImpl(
+				type, condition);
 
 		// TODO
-		// IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
-		IsSatisfy isSatisfy = new IsSatisfy() {
-
-			@Override
-			public boolean isSatisfy(Map<Date, Temperature> records) {
-				return true;
-			}
-		};
+		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
 		final ProcessDefinitionEntity processDefinition = bpmnParse
 				.getCurrentProcessDefinition();
 
@@ -87,6 +80,11 @@ public class DiplabEventDefinitionParserHandler extends
 			public void activate(Map<Date, Temperature> records) {
 				DiplabTemperature.processEngine.getRuntimeService()
 						.startProcessInstanceById(processDefinition.getId());
+			}
+
+			@Override
+			public boolean isEnd() {
+				return false;
 			}
 		};
 		SchedulerTask.addTemperatureEventListener(listener);
