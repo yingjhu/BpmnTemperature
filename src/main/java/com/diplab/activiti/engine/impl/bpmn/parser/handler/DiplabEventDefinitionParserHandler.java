@@ -1,4 +1,4 @@
-package com.diplab.avtiviti.engine.impl.bpmn.parser.handler;
+package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
 import java.util.Date;
 import java.util.Map;
@@ -21,6 +21,8 @@ import com.diplab.temperature.IsSatisfy;
 import com.diplab.temperature.Temperature;
 import com.diplab.temperature.TemperatureEventListener;
 import com.diplab.temperature.delegate.SchedulerTask;
+
+
 
 public class DiplabEventDefinitionParserHandler extends
 		AbstractBpmnParseHandler<DiplabEventDefinition> {
@@ -86,6 +88,10 @@ public class DiplabEventDefinitionParserHandler extends
 				type, condition);
 
 		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
+		if (isSatisfy == null) {
+			// isSatisfy is null -> it's impossible to be activated.
+			return;
+		}
 		final ProcessDefinitionEntity processDefinition = bpmnParse
 				.getCurrentProcessDefinition();
 

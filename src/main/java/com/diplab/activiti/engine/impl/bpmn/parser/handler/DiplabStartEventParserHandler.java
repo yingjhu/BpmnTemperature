@@ -1,4 +1,4 @@
-package com.diplab.avtiviti.engine.impl.bpmn.parser.handler;
+package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
 import org.activiti.bpmn.model.EventDefinition;
 import org.activiti.bpmn.model.MessageEventDefinition;

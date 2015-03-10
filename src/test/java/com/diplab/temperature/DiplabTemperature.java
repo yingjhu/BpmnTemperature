@@ -9,8 +9,8 @@ import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.parse.BpmnParseHandler;
 
 import com.diplab.activiti.bpmn.converter.DiplabStartEventXMLConverter;
-import com.diplab.avtiviti.engine.impl.bpmn.parser.handler.DiplabEventDefinitionParserHandler;
-import com.diplab.avtiviti.engine.impl.bpmn.parser.handler.DiplabStartEventParserHandler;
+import com.diplab.activiti.engine.impl.bpmn.parser.handler.DiplabEventDefinitionParserHandler;
+import com.diplab.activiti.engine.impl.bpmn.parser.handler.DiplabStartEventParserHandler;
 
 public class DiplabTemperature {
 

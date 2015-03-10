@@ -18,6 +18,9 @@ public class TemperatureDeclarationImpl {
 		this.condition = condition;
 	}
 
+	/**
+	 * @return null if mode is not defined.
+	 */
 	public IsSatisfy prepareIsSatisfy() {
 		switch (type) {
 		case GREATER:

@@ -8,10 +8,6 @@ public class Temperature {
 		return temp;
 	}
 
-	public Temperature() {
-		temp = Math.random() * (45 - 30 + 1) + 30;
-	}
-
 	public Temperature(double temp) {
 		super();
 		this.temp = temp;
