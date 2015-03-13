@@ -1,4 +1,4 @@
-package com.diplab.temperature;
+package com.diplab.activiti.temperature;
 
 import java.util.Arrays;
 
