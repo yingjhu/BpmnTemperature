@@ -1,4 +1,4 @@
-package com.diplab.avtiviti.engine.impl.bpmn.parser.handler;
+package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
 import java.util.Date;
 import java.util.Map;
@@ -16,10 +16,11 @@ import org.slf4j.LoggerFactory;
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationImpl;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
-import com.diplab.temperature.IsSatisfy;
-import com.diplab.temperature.Temperature;
-import com.diplab.temperature.TemperatureEventListener;
-import com.diplab.temperature.TemperatureEventScheduler;
+import com.diplab.activiti.temperature.IsSatisfy;
+import com.diplab.activiti.temperature.Temperature;
+import com.diplab.activiti.temperature.TemperatureEventListener;
+import com.diplab.activiti.temperature.delegate.SchedulerTask;
+import com.diplab.temperature.DiplabTemperature;
 
 public class DiplabEventDefinitionParserHandler extends
 		AbstractBpmnParseHandler<DiplabEventDefinition> {
@@ -35,12 +36,23 @@ public class DiplabEventDefinitionParserHandler extends
 	@Override
 	protected void executeParse(BpmnParse bpmnParse,
 			DiplabEventDefinition eventDefinition) {
-		// Behavior
+
+		/*
+		 * 1. prepare activity behavior
+		 * 2. prepare TemperatureEventListener
+		 * 3. add TemperatureEventListener into scheduler
+		 */
+
+		// 1. Behavior: go through next activity
 		ActivityImpl temperatureEventActivity = bpmnParse.getCurrentActivity();
 		temperatureEventActivity.setActivityBehavior(new ActivityBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			/**
+			 * Just go through the next activity
+			 * Only one transition should be taken
+			 */
 			public void execute(ActivityExecution execution) throws Exception {
 				System.out.println("Temperature");
 				execution.take(execution.getActivity().getOutgoingTransitions()
@@ -49,7 +61,15 @@ public class DiplabEventDefinitionParserHandler extends
 			}
 		});
 
-		// prepare TemperatureEventListener and schedule
+		/*
+		 * 2. prepare TemperatureEventListener
+		 * 
+		 * 2.1 Prepare TemperatureDeclarationType
+		 * 2.2 Use TemperatureDeclarationType.prepareIsSatisfy()
+		 * 2.3 New TemperatureEventListener with IsSatisfy
+		 * and implement activate and isEnd
+		 */
+
 		TemperatureDeclarationType type;
 		double condition = Double.parseDouble(eventDefinition.getCondition());
 		if (eventDefinition.getMode().equalsIgnoreCase("greater")) {
@@ -66,21 +86,30 @@ public class DiplabEventDefinitionParserHandler extends
 				type, condition);
 
 		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
-
+		if (isSatisfy == null) {
+			// isSatisfy is null -> it's impossible to be activated.
+			return;
+		}
 		final ProcessDefinitionEntity processDefinition = bpmnParse
 				.getCurrentProcessDefinition();
 
-		TemperatureEventListener observer = new TemperatureEventListener(
+		TemperatureEventListener listener = new TemperatureEventListener(
 				isSatisfy) {
 
 			@Override
 			public void activate(Map<Date, Temperature> records) {
-				processDefinition.createProcessInstance().start();
+				DiplabTemperature.processEngine.getRuntimeService()
+						.startProcessInstanceById(processDefinition.getId());
+			}
+
+			@Override
+			public boolean isEnd() {
+				return false;
 			}
 		};
-		TemperatureEventScheduler.getTemperatureEventScheduler()
-				.addTemperatureEventObserver(observer);
+
+		// 3. schedule
+		SchedulerTask.addTemperatureEventListener(listener);
 
 	}
-
 }

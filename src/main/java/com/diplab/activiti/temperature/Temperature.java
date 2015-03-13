@@ -1,15 +1,11 @@
-package com.diplab.temperature;
+package com.diplab.activiti.temperature;
 
 public class Temperature {
 
 	private double temp;
 
-	public double getTemp() {
+	public double getTemperature() {
 		return temp;
-	}
-
-	public Temperature() {
-		temp = Math.random() * (45 - 30 + 1) + 30;
 	}
 
 	public Temperature(double temp) {

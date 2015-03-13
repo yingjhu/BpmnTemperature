@@ -3,9 +3,9 @@ package com.diplab.activiti.engine.impl.jobexecutor;
 import java.util.Date;
 import java.util.Map;
 
-import com.diplab.temperature.IsSatisfy;
-import com.diplab.temperature.RecordsUtil;
-import com.diplab.temperature.Temperature;
+import com.diplab.activiti.temperature.IsSatisfy;
+import com.diplab.activiti.temperature.RecordsUtil;
+import com.diplab.activiti.temperature.Temperature;
 
 public class TemperatureDeclarationImpl {
 	private TemperatureDeclarationType type;
@@ -18,6 +18,9 @@ public class TemperatureDeclarationImpl {
 		this.condition = condition;
 	}
 
+	/**
+	 * @return null if mode is not defined.
+	 */
 	public IsSatisfy prepareIsSatisfy() {
 		switch (type) {
 		case GREATER:
@@ -25,7 +28,9 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
-					return RecordsUtil.getLatest(records).getTemp() > condition;
+					if (records == null || records.size() == 0)
+						return false;
+					return RecordsUtil.getLatest(records).getTemperature() > condition;
 				}
 			};
 
@@ -34,7 +39,9 @@ public class TemperatureDeclarationImpl {
 
 				@Override
 				public boolean isSatisfy(Map<Date, Temperature> records) {
-					return RecordsUtil.getLatest(records).getTemp() < condition;
+					if (records == null || records.size() == 0)
+						return false;
+					return RecordsUtil.getLatest(records).getTemperature() < condition;
 				}
 			};
 		default:
