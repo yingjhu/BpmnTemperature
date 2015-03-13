@@ -33,16 +33,23 @@ public class DiplabTemperature {
 		// standaloneInMemProcessEngineConfiguration.setCustomPostDeployers(customPostDeployers)
 
 		standaloneInMemProcessEngineConfiguration.setJobExecutorActivate(true);
-		
+
 		final ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
 				.buildProcessEngine();
 		DiplabTemperature.processEngine = processEngine;
 
-		processEngine.getRepositoryService().createDeployment()
-				.disableSchemaValidation().disableBpmnValidation()
-				.addClasspathResource("ReadTempProcess.bpmn")
-				.addClasspathResource("SchedulerProcess.bpmn")
-				.addClasspathResource("temperature.bpmn20.xml").deploy();
+		processEngine
+				.getRepositoryService()
+				.createDeployment()
+				.disableSchemaValidation()
+				.disableBpmnValidation()
+				.addClasspathResource(
+						"com/diplab/activiti/temperature/process/ReadTempProcess.bpmn")
+				.addClasspathResource(
+						"com/diplab/activiti/temperature/process/SchedulerProcess.bpmn")
+				.addClasspathResource(
+						"temperature.bpmn20.xml")
+				.deploy();
 
 		processEngine.getRuntimeService().startProcessInstanceByKey(
 				"ReadTempProcess");
