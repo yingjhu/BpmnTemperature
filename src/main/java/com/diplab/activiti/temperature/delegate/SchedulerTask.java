@@ -1,4 +1,4 @@
-package com.diplab.temperature.delegate;
+package com.diplab.activiti.temperature.delegate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.List;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
-import com.diplab.temperature.RecordsUtil;
-import com.diplab.temperature.TemperatureEventListener;
+import com.diplab.activiti.temperature.RecordsUtil;
+import com.diplab.activiti.temperature.TemperatureEventListener;
 
 public class SchedulerTask implements JavaDelegate {
 	static List<TemperatureEventListener> listeners = Collections

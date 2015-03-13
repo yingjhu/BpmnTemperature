@@ -1,4 +1,4 @@
-package com.diplab.temperature;
+package com.diplab.activiti.temperature;
 
 public interface TemperatureReceiver {
 	public Temperature getTemperature();

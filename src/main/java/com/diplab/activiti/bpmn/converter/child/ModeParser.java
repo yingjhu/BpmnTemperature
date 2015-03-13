@@ -7,7 +7,7 @@ import org.activiti.bpmn.model.BaseElement;
 import org.activiti.bpmn.model.BpmnModel;
 
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
-import com.diplab.temperature.Constant;
+import com.diplab.activiti.temperature.Constant;
 
 public class ModeParser extends BaseChildElementParser {
 

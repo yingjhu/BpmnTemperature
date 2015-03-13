@@ -9,7 +9,7 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.Event;
 
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
-import com.diplab.temperature.Constant;
+import com.diplab.activiti.temperature.Constant;
 
 public class DiplabEventDefinitionParser extends BaseChildElementParser {
 

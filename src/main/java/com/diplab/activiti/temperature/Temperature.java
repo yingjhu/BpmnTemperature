@@ -1,4 +1,4 @@
-package com.diplab.temperature;
+package com.diplab.activiti.temperature;
 
 public class Temperature {
 

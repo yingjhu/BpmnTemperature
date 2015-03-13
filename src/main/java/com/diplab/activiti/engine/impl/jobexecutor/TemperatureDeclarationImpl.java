@@ -3,9 +3,9 @@ package com.diplab.activiti.engine.impl.jobexecutor;
 import java.util.Date;
 import java.util.Map;
 
-import com.diplab.temperature.IsSatisfy;
-import com.diplab.temperature.RecordsUtil;
-import com.diplab.temperature.Temperature;
+import com.diplab.activiti.temperature.IsSatisfy;
+import com.diplab.activiti.temperature.RecordsUtil;
+import com.diplab.activiti.temperature.Temperature;
 
 public class TemperatureDeclarationImpl {
 	private TemperatureDeclarationType type;

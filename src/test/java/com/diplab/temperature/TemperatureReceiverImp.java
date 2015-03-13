@@ -1,5 +1,8 @@
 package com.diplab.temperature;
 
+import com.diplab.activiti.temperature.Temperature;
+import com.diplab.activiti.temperature.TemperatureReceiver;
+
 public class TemperatureReceiverImp implements TemperatureReceiver {
 	public Temperature getTemperature() {
 		try {

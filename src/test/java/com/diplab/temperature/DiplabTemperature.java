@@ -33,7 +33,7 @@ public class DiplabTemperature {
 		// standaloneInMemProcessEngineConfiguration.setCustomPostDeployers(customPostDeployers)
 
 		standaloneInMemProcessEngineConfiguration.setJobExecutorActivate(true);
-
+		
 		final ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
 				.buildProcessEngine();
 		DiplabTemperature.processEngine = processEngine;

@@ -1,12 +1,12 @@
-package com.diplab.temperature.delegate;
+package com.diplab.activiti.temperature.delegate;
 
 import java.util.Date;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
-import com.diplab.temperature.RecordsUtil;
-import com.diplab.temperature.TemperatureReceiver;
+import com.diplab.activiti.temperature.RecordsUtil;
+import com.diplab.activiti.temperature.TemperatureReceiver;
 import com.diplab.temperature.TemperatureReceiverImp;
 
 public class ReadTempTask implements JavaDelegate {
