@@ -2,19 +2,25 @@ package com.diplab.activiti.temperature;
 
 public class Temperature {
 
-	private double temp;
+	private double temperature;
+
+	public Temperature(double temperature) {
+		super();
+		this.temperature = temperature;
+	}
+	
+	public Temperature(){}
 
 	public double getTemperature() {
-		return temp;
+		return temperature;
 	}
 
-	public Temperature(double temp) {
-		super();
-		this.temp = temp;
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("T=%d", temp);
+		return String.format("T=%d", temperature);
 	}
 }
