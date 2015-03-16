@@ -1,4 +1,4 @@
-create table DIP_TEMPERATURE(
-	TEMPERATURE_ FLOAT not null,
-	SCAN_TIME_ timestamp not null
+create table IF NOT EXISTS DIP_TEMPERATURE(
+	TEMPERATURE_ DOUBLE not null,
+	-- SCAN_TIME_ timestamp not null
 );
