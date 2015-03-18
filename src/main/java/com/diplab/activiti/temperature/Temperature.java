@@ -1,15 +1,10 @@
 package com.diplab.activiti.temperature;
 
+import java.util.Date;
+
 public class Temperature {
 
 	private double temperature;
-
-	public Temperature(double temperature) {
-		super();
-		this.temperature = temperature;
-	}
-	
-	public Temperature(){}
 
 	public double getTemperature() {
 		return temperature;
@@ -19,8 +14,18 @@ public class Temperature {
 		this.temperature = temperature;
 	}
 
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	private Date time;
+
 	@Override
 	public String toString() {
-		return String.format("T=%d", temperature);
+		return String.format("%s T=%f", time.toLocaleString(), temperature);
 	}
 }

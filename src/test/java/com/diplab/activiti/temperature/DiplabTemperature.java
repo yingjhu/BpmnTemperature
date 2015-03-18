@@ -17,24 +17,24 @@ public class DiplabTemperature {
 	public static ProcessEngine processEngine;
 
 	public static void main(String[] args) throws InterruptedException {
-		ProcessEngineConfigurationImpl standaloneInMemProcessEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
+		ProcessEngineConfigurationImpl DipProcessEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
 				.createStandaloneInMemProcessEngineConfiguration();
 
 		BpmnXMLConverter.addConverter(new DiplabStartEventXMLConverter());
 
-		standaloneInMemProcessEngineConfiguration
+		DipProcessEngineConfiguration
 				.setCustomDefaultBpmnParseHandlers(Arrays
 						.<BpmnParseHandler> asList(new DiplabStartEventParserHandler()));
 
-		standaloneInMemProcessEngineConfiguration
+		DipProcessEngineConfiguration
 				.setPostBpmnParseHandlers(Arrays
 						.<BpmnParseHandler> asList(new DiplabEventDefinitionParserHandler()));
 
 		// standaloneInMemProcessEngineConfiguration.setCustomPostDeployers(customPostDeployers)
 
-		standaloneInMemProcessEngineConfiguration.setJobExecutorActivate(true);
+		DipProcessEngineConfiguration.setJobExecutorActivate(true);
 
-		final ProcessEngine processEngine = standaloneInMemProcessEngineConfiguration
+		final ProcessEngine processEngine = DipProcessEngineConfiguration
 				.buildProcessEngine();
 		DiplabTemperature.processEngine = processEngine;
 

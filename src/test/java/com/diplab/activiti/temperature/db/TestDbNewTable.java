@@ -1,5 +1,6 @@
 package com.diplab.activiti.temperature.db;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class TestDbNewTable {
 
 	@Test
 	public void testMybatis() {
-		
+
 	}
 
 	@Test
@@ -43,11 +44,14 @@ public class TestDbNewTable {
 
 				TemperatureMapper mapper = sqlSession
 						.getMapper(TemperatureMapper.class);
-				mapper.insert(new Temperature(100));
+				Temperature temp = new Temperature();
+				temp.setTemperature(100.35);
+				temp.setTime(new Date());
+				mapper.insert(temp);
 				List<Temperature> allList = mapper.selectAll();
 
-				for (Temperature temp : allList) {
-					System.out.println(temp);
+				for (Temperature temp2 : allList) {
+					System.out.println(temp2);
 				}
 				return null;
 			}
