@@ -9,6 +9,19 @@ import org.activiti.engine.impl.interceptor.CommandContext;
 
 public class DipProcessEngineConfiguration extends
 		StandaloneProcessEngineConfiguration {
+
+	// TODO: TemperatureService
+	// TemperatureService temperatureService = new TemperatureService(this);
+	
+	// Override initService
+	// @Override
+	// protected void initServices() {
+	// super.initServices();
+	// initService(service);
+	// };
+	
+	//getter and setter for TemperatureService
+
 	@Override
 	public ProcessEngine buildProcessEngine() {
 		init();
