@@ -17,8 +17,7 @@ public class DiplabTemperature {
 	public static ProcessEngine processEngine;
 
 	public static void main(String[] args) throws InterruptedException {
-		ProcessEngineConfigurationImpl DipProcessEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
-				.createStandaloneInMemProcessEngineConfiguration();
+		ProcessEngineConfigurationImpl DipProcessEngineConfiguration = new com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration();
 
 		BpmnXMLConverter.addConverter(new DiplabStartEventXMLConverter());
 
@@ -45,16 +44,16 @@ public class DiplabTemperature {
 				.disableBpmnValidation()
 				.addClasspathResource(
 						"com/diplab/activiti/temperature/process/ReadTempProcess.bpmn")
-				.addClasspathResource(
-						"com/diplab/activiti/temperature/process/SchedulerProcess.bpmn")
-				.addClasspathResource(
-						"temperature.bpmn20.xml")
+				// .addClasspathResource(
+				// "com/diplab/activiti/temperature/process/SchedulerProcess.bpmn")
+				// .addClasspathResource(
+				// "temperature.bpmn20.xml")
 				.deploy();
 
 		processEngine.getRuntimeService().startProcessInstanceByKey(
 				"ReadTempProcess");
-		processEngine.getRuntimeService().startProcessInstanceByKey(
-				"schedulerProcess");
+		// processEngine.getRuntimeService().startProcessInstanceByKey(
+		// "schedulerProcess");
 
 	}
 }

@@ -7,20 +7,29 @@ import org.activiti.engine.impl.db.DbSqlSession;
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandContext;
 
+import com.diplab.activiti.engine.impl.TemperatureServiceImpl;
+
 public class DipProcessEngineConfiguration extends
 		StandaloneProcessEngineConfiguration {
 
-	// TODO: TemperatureService
-	// TemperatureService temperatureService = new TemperatureService(this);
-	
+	TemperatureServiceImpl temperatureService = new TemperatureServiceImpl(this);
+
 	// Override initService
-	// @Override
-	// protected void initServices() {
-	// super.initServices();
-	// initService(service);
-	// };
-	
-	//getter and setter for TemperatureService
+	@Override
+	protected void initServices() {
+		super.initServices();
+		initService(temperatureService);
+	};
+
+	// getter and setter for TemperatureService
+
+	public TemperatureServiceImpl getTemperatureService() {
+		return temperatureService;
+	}
+
+	public void setTemperatureService(TemperatureServiceImpl temperatureService) {
+		this.temperatureService = temperatureService;
+	}
 
 	@Override
 	public ProcessEngine buildProcessEngine() {
@@ -42,4 +51,5 @@ public class DipProcessEngineConfiguration extends
 		});
 		return new ProcessEngineImpl(this);
 	}
+
 }
