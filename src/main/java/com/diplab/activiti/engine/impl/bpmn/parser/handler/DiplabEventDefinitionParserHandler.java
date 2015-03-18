@@ -1,6 +1,7 @@
 package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
@@ -38,9 +39,8 @@ public class DiplabEventDefinitionParserHandler extends
 			DiplabEventDefinition eventDefinition) {
 
 		/*
-		 * 1. prepare activity behavior
-		 * 2. prepare TemperatureEventListener
-		 * 3. add TemperatureEventListener into scheduler
+		 * 1. prepare activity behavior 2. prepare TemperatureEventListener 3.
+		 * add TemperatureEventListener into scheduler
 		 */
 
 		// 1. Behavior: go through next activity
@@ -64,10 +64,10 @@ public class DiplabEventDefinitionParserHandler extends
 		/*
 		 * 2. prepare TemperatureEventListener
 		 * 
-		 * 2.1 Prepare TemperatureDeclarationType
-		 * 2.2 Use TemperatureDeclarationType.prepareIsSatisfy()
-		 * 2.3 New TemperatureEventListener with IsSatisfy
-		 * and implement activate and isEnd
+		 * 2.1 Prepare TemperatureDeclarationType 2.2 Use
+		 * TemperatureDeclarationType.prepareIsSatisfy() 2.3 New
+		 * TemperatureEventListener with IsSatisfy and implement activate and
+		 * isEnd
 		 */
 
 		TemperatureDeclarationType type;
@@ -97,7 +97,7 @@ public class DiplabEventDefinitionParserHandler extends
 				isSatisfy) {
 
 			@Override
-			public void activate(Map<Date, Temperature> records) {
+			public void activate(List<Temperature> records) {
 				DiplabTemperature.processEngine.getRuntimeService()
 						.startProcessInstanceById(processDefinition.getId());
 			}

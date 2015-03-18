@@ -1,8 +1,7 @@
 package com.diplab.activiti.temperature;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 public interface IsSatisfy {
-	boolean isSatisfy(Map<Date, Temperature> records);
+	boolean isSatisfy(List<Temperature> records);
 }

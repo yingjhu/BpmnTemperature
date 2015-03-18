@@ -23,8 +23,8 @@ public class SchedulerTask implements JavaDelegate {
 					.iterator(); iterator.hasNext();) {
 				TemperatureEventListener temperatureEventListener = iterator
 						.next();
-				if (temperatureEventListener.isSatisfy(RecordsUtil.records)) {
-					temperatureEventListener.activate(RecordsUtil.records);
+				if (temperatureEventListener.isSatisfy(RecordsUtil.getRecords())) {
+					temperatureEventListener.activate(RecordsUtil.getRecords());
 					if (temperatureEventListener.isEnd()) {
 						iterator.remove();
 					}

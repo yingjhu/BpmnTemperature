@@ -1,7 +1,6 @@
 package com.diplab.activiti.engine.impl.jobexecutor;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import com.diplab.activiti.temperature.IsSatisfy;
 import com.diplab.activiti.temperature.RecordsUtil;
@@ -27,7 +26,7 @@ public class TemperatureDeclarationImpl {
 			return new IsSatisfy() {
 
 				@Override
-				public boolean isSatisfy(Map<Date, Temperature> records) {
+				public boolean isSatisfy(List<Temperature> records) {
 					if (records == null || records.size() == 0)
 						return false;
 					return RecordsUtil.getLatest(records).getTemperature() > condition;
@@ -38,7 +37,7 @@ public class TemperatureDeclarationImpl {
 			return new IsSatisfy() {
 
 				@Override
-				public boolean isSatisfy(Map<Date, Temperature> records) {
+				public boolean isSatisfy(List<Temperature> records) {
 					if (records == null || records.size() == 0)
 						return false;
 					return RecordsUtil.getLatest(records).getTemperature() < condition;
