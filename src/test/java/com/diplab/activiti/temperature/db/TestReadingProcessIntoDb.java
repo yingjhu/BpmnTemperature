@@ -1,9 +1,8 @@
-package com.diplab.activiti.temperature.service;
+package com.diplab.activiti.temperature.db;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 import org.activiti.engine.ProcessEngine;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,31 +10,25 @@ import org.junit.Test;
 import com.diplab.activiti.engine.impl.cfg.DipInMemProcessEngineConfiguration;
 import com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration;
 import com.diplab.activiti.temperature.Temperature;
-import com.diplab.activiti.temperature.db.TemperatureMapper;
 
 public class TestReadingProcessIntoDb {
 
 	@Test
 	public void testInsert() {
 		DipProcessEngineConfiguration config = new DipInMemProcessEngineConfiguration();
-		Set<Class<?>> customMybatisMappers = new HashSet<>();
-		customMybatisMappers.add(TemperatureMapper.class);
-
-		config.setCustomMybatisMappers(customMybatisMappers);
-		config.setDatabaseSchemaUpdate("drop-create");
-
 		config.buildProcessEngine();
 
-		Temperature temperature2 = new Temperature();
-		temperature2.setTemperature(1233.20);
+		Temperature temp = new Temperature();
+		temp.setTemperature(1233.20);
 		Date time = new Date();
-		temperature2.setTime(time);
+		temp.setTime(time);
 
-		config.getTemperatureService().insert(temperature2);
+		config.getTemperatureService().insert(temp);
 
 		List<Temperature> temperatures = config.getTemperatureService()
 				.getTemperatures();
 
+		Assert.assertEquals(temperatures.size(), 1);
 		Assert.assertEquals(temperatures.get(0).getTemperature(), 1233.20, 0);
 		Assert.assertEquals(temperatures.get(0).getTime(), time);
 
@@ -43,11 +36,6 @@ public class TestReadingProcessIntoDb {
 
 	public static void main(String[] args) {
 		DipProcessEngineConfiguration config = new DipProcessEngineConfiguration();
-		Set<Class<?>> customMybatisMappers = new HashSet<>();
-		customMybatisMappers.add(TemperatureMapper.class);
-
-		config.setCustomMybatisMappers(customMybatisMappers);
-		config.setDatabaseSchemaUpdate("drop-create");
 		config.setJobExecutorActivate(true);
 
 		ProcessEngine processEngine = config.buildProcessEngine();

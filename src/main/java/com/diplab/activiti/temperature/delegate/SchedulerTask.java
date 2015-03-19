@@ -21,7 +21,7 @@ public class SchedulerTask implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		System.out.println(SchedulerTask.class.getName());
 		while (true) {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			List<Temperature> temperatures = ((DipProcessEngineConfiguration) ProcessEngines
 					.getDefaultProcessEngine().getProcessEngineConfiguration()
 					.getProcessEngineConfiguration()).getTemperatureService()

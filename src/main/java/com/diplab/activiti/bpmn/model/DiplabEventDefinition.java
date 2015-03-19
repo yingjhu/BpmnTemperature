@@ -43,6 +43,7 @@ public class DiplabEventDefinition extends EventDefinition {
 		super.setValues(otherDefinition);
 		setMode(otherDefinition.getMode());
 		setCondition(otherDefinition.getCondition());
+		setTime(otherDefinition.getTime());
 
 	}
 
