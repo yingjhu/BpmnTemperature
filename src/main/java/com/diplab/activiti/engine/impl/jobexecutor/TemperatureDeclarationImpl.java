@@ -3,7 +3,6 @@ package com.diplab.activiti.engine.impl.jobexecutor;
 import java.util.List;
 
 import com.diplab.activiti.temperature.IsSatisfy;
-import com.diplab.activiti.temperature.RecordsUtil;
 import com.diplab.activiti.temperature.Temperature;
 
 public class TemperatureDeclarationImpl {
@@ -29,7 +28,7 @@ public class TemperatureDeclarationImpl {
 				public boolean isSatisfy(List<Temperature> records) {
 					if (records == null || records.size() == 0)
 						return false;
-					return RecordsUtil.getLatest(records).getTemperature() > condition;
+					return records.get(0).getTemperature() > condition;
 				}
 			};
 
@@ -40,7 +39,7 @@ public class TemperatureDeclarationImpl {
 				public boolean isSatisfy(List<Temperature> records) {
 					if (records == null || records.size() == 0)
 						return false;
-					return RecordsUtil.getLatest(records).getTemperature() < condition;
+					return records.get(0).getTemperature() < condition;
 				}
 			};
 		default:

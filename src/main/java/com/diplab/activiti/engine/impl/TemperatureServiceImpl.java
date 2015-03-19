@@ -23,6 +23,12 @@ public class TemperatureServiceImpl extends ServiceImpl {
 
 	}
 
+	public Temperature getLatestTemperature() {
+		List<Temperature> temperatures = getTemperatures();
+		return (temperatures.size() == 0) ? null : temperatures.get(0);
+
+	}
+
 	public void insert(Temperature temperature) {
 		commandExecutor.execute(new InsertTemperatureCmd(temperature));
 	}
