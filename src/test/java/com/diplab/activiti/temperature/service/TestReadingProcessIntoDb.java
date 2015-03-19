@@ -5,19 +5,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.Test;
+import junit.framework.Assert;
 
+import org.activiti.engine.ProcessEngine;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.diplab.activiti.engine.impl.cfg.DipInMemProcessEngineConfiguration;
 import com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.db.TemperatureMapper;
 
-public class TestService {
+public class TestReadingProcessIntoDb {
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testService() {
-		DipProcessEngineConfiguration config = new DipProcessEngineConfiguration();
+	public void testInsert() {
+		DipProcessEngineConfiguration config = new DipInMemProcessEngineConfiguration();
 		Set<Class<?>> customMybatisMappers = new HashSet<>();
 		customMybatisMappers.add(TemperatureMapper.class);
 
@@ -28,16 +32,17 @@ public class TestService {
 
 		Temperature temperature2 = new Temperature();
 		temperature2.setTemperature(1233.20);
-		temperature2.setTime(new Date());
+		Date time = new Date();
+		temperature2.setTime(time);
 
 		config.getTemperatureService().insert(temperature2);
 
 		List<Temperature> temperatures = config.getTemperatureService()
 				.getTemperatures();
 
-		for (Temperature temperature : temperatures) {
-			System.out.println(temperature);
-		}
+		Assert.assertEquals(temperatures.get(0).getTemperature(), 1233.20);
+		Assert.assertEquals(temperatures.get(0).getTime(), time);
+
 	}
 
 	@Test

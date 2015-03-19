@@ -11,7 +11,7 @@ import com.diplab.activiti.temperature.Temperature;
 
 public interface TemperatureMapper {
 
-	@Select("SELECT * FROM DIP_TEMPERATURE")
+	@Select("SELECT * FROM DIP_TEMPERATURE ORDER BY SCAN_TIME_ DESC  LIMIT 60")
 	@Results(value = {
 			@Result(column = "TEMPERATURE_", property = "temperature"),
 			@Result(column = "SCAN_TIME_", property = "time") })
