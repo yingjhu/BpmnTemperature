@@ -4,12 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import junit.framework.Assert;
-
 import org.activiti.engine.ProcessEngine;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.diplab.activiti.engine.impl.cfg.DipInMemProcessEngineConfiguration;
 import com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration;
@@ -18,7 +15,6 @@ import com.diplab.activiti.temperature.db.TemperatureMapper;
 
 public class TestReadingProcessIntoDb {
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testInsert() {
 		DipProcessEngineConfiguration config = new DipInMemProcessEngineConfiguration();
@@ -40,12 +36,11 @@ public class TestReadingProcessIntoDb {
 		List<Temperature> temperatures = config.getTemperatureService()
 				.getTemperatures();
 
-		Assert.assertEquals(temperatures.get(0).getTemperature(), 1233.20);
+		Assert.assertEquals(temperatures.get(0).getTemperature(), 1233.20, 0);
 		Assert.assertEquals(temperatures.get(0).getTime(), time);
 
 	}
 
-	@Test
 	public static void main(String[] args) {
 		DipProcessEngineConfiguration config = new DipProcessEngineConfiguration();
 		Set<Class<?>> customMybatisMappers = new HashSet<>();

@@ -26,6 +26,6 @@ public class Temperature {
 
 	@Override
 	public String toString() {
-		return String.format("%s T=%f", time.toLocaleString(), temperature);
+		return String.format("%s T=%f", time.toString(), temperature);
 	}
 }

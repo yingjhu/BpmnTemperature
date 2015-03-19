@@ -1,8 +1,6 @@
 package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
 import org.activiti.engine.impl.bpmn.parser.BpmnParse;
